@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<package name="bms" extends="struts-default" namespace="/">
+		<interceptors>
+			<interceptor name="sessionCheckInterceptors" class="bms.action.SessionCheckInterceptor" />
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="sessionCheckInterceptors" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="authStack"></default-interceptor-ref>
+
+		<global-results>
+			<result name="error">/login.jsp</result>
+			<result name="dberror">/dberror.jsp</result>
+		</global-results>
+
+		<action name="exportFile" class="bms.action.Export">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">4096</param>
+				<param name="contentDisposition">attachment;fileName="data.txt"</param>
+			</result>
+		</action>
+
+		<action name="logout" class="bms.action.Logout">
+			<result>/message.jsp</result>
+		</action>
+
+		<action name="guest" class="bms.action.Guest">
+			<result>/main.jsp</result>
+		</action>
+
+		<action name="login" class="bms.action.Login">
+			<result>/main.jsp</result>
+		</action>
+
+		<action name="doAdd" class="bms.action.Add">
+			<result>/message.jsp</result>
+		</action>
+
+		<action name="doUpdate" class="bms.action.Update">
+			<result>/message.jsp</result>
+		</action>
+
+		<action name="doDelete" class="bms.action.Delete">
+			<result>/message.jsp</result>
+		</action>
+
+		<action name="delete" class="bms.Delete">
+			<result>/delete.jsp</result>
+		</action>
+
+		<action name="update" class="bms.Update">
+			<result>/update.jsp</result>
+		</action>
+
+		<action name="add" class="bms.Add">
+			<result>/update.jsp</result>
+		</action>
+
+		<action name="select" class="bms.Select">
+			<result>/select.jsp</result>
+		</action>
+
+		<action name="main" class="bms.Index">
+			<result>/main.jsp</result>
+		</action>
+
+	</package>
+</struts>
